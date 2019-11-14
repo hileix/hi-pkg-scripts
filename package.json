@@ -1,5 +1,5 @@
 {
-  "name": "pkg-scripts",
+  "name": "hi-pkg-scripts",
   "version": "0.1.0",
   "description": "package.json scripts",
   "main": "index.js",
