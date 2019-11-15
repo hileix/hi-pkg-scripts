@@ -7,7 +7,7 @@
     "pkg-scripts": "src/index.js"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "release": "node src/index.js"
   },
   "repository": {
     "type": "git",
@@ -25,7 +25,6 @@
   "devDependencies": {
     "chalk": "^3.0.0",
     "commander": "^4.0.1",
-    "execa": "^3.3.0",
     "git-rev-sync": "^1.12.0",
     "inquirer": "^7.0.0",
     "ora": "^4.0.3",

@@ -14,7 +14,7 @@ yarn add pkg-scripts -D
 
 ```json
 {
-  "name": "your project name"
+  "name": "your project name",
   "scripts": {
     "release": "pkg-scripts release"
   }

@@ -5,7 +5,6 @@ const chalk = require('chalk');
 const fs = require('fs');
 const path = require('path');
 const { spawnSync, spawn, execSync } = require('child_process');
-const execa = require('execa');
 const git = require('git-rev-sync');
 const sgf = require('staged-git-files');
 
