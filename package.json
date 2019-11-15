@@ -30,5 +30,8 @@
     "ora": "^4.0.3",
     "semver": "^6.3.0",
     "staged-git-files": "^1.2.0"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
   }
 }
