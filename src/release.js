@@ -29,11 +29,9 @@ const questionOne = {
 
 const spinner = ora().start();
 
-main();
+async function main(branchName = 'master') {
 
-async function main() {
-
-  validateBranch();
+  validateBranch(branchName);
 
   await validateCommit();
 
@@ -53,12 +51,12 @@ async function main() {
 /**
  * 验证是否是在主分支（只能在主分支发布）
  */
-function validateBranch() {
-  spinner.start('开始验证分支是否为 master 分支')
+function validateBranch(branchName) {
+  spinner.start(`开始验证分支是否为 ${branchName} 分支`)
   const currentBranch = git.branch(process.cwd());
-  if ('master'.indexOf(currentBranch) === -1) {
+  if (branchName.indexOf(currentBranch) === -1) {
     spinner.fail(`当前为 ${chalk.green(currentBranch)} 分支，请在 ${chalk.green(
-      'master'
+      branchName
     )} 分支进行发布`);
     process.exit(1);
   }
@@ -193,3 +191,5 @@ async function sleep(t) {
     }, t)
   })
 }
+
+module.exports = main;

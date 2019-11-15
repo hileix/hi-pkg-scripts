@@ -22,7 +22,7 @@ yarn add hi-pkg-scripts -D
 }
 ```
 
-- pkg-scripts release <branch>: 发布一个版本到 npm 仓库上，会按照顺序做以下事情：
+- pkg-scripts release `<branch>`: 发布一个版本到 npm 仓库上，会按照顺序做以下事情：
   - 0. 验证分支是否为发布分支
   - 1. 更改 package.json 中的 version 字段
   - 2. 发布到 npm 仓库上
