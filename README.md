@@ -14,7 +14,7 @@ yarn add pkg-scripts -D
 
 ```json
 {
-  "name": "your project name"
+  "name": "your project name",
   "scripts": {
     "release": "pkg-scripts release"
   }
@@ -22,7 +22,7 @@ yarn add pkg-scripts -D
 ```
 
 - pkg-scripts release: 发布一个版本到 npm 仓库上，会按照顺序做以下事情：
-  <!-- - 0. 验证分支是否为发布分支 -->
+  - 0. 验证分支是否为发布分支（目前为主分支）
   - 1. 更改 package.json 中的 version 字段
   - 2. 发布到 npm 仓库上
   - 4. 自动 commit，且打上 tag

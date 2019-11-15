@@ -1,13 +1,13 @@
 {
-  "name": "pkg-scripts",
-  "version": "0.1.0",
+  "name": "hi-pkg-scripts",
+  "version": "0.2.0",
   "description": "package.json scripts",
   "main": "index.js",
   "bin": {
-    "pkg-scripts": "src/index.js"
+    "hi-pkg-scripts": "src/index.js"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "release": "node src/index.js -- release"
   },
   "repository": {
     "type": "git",
@@ -22,10 +22,16 @@
     "url": "https://github.com/hileix/pkg-scripts/issues"
   },
   "homepage": "https://github.com/hileix/pkg-scripts#readme",
-  "devDependencies": {
+  "files": [
+    "src/**"
+  ],
+  "devDependencies": {},
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "dependencies": {
     "chalk": "^3.0.0",
     "commander": "^4.0.1",
-    "execa": "^3.3.0",
     "git-rev-sync": "^1.12.0",
     "inquirer": "^7.0.0",
     "listr": "^0.14.3",
