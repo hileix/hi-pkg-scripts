@@ -32,7 +32,7 @@ const spinner = ora().start();
 main();
 
 async function main() {
-  
+
   validateBranch();
 
   await validateCommit();
@@ -70,7 +70,7 @@ function validateBranch() {
  */
 async function validateCommit() {
   spinner.start('开始验证是否有未 commit 的文件');
-  
+
   async function hasNoCommitFile() {
     const stagedFiles = await sgf();
     const arr = ['Added', 'Modified'];
@@ -82,7 +82,6 @@ async function validateCommit() {
     spinner.fail(`当前有文件未 commit，请先 commit！`);
     process.exit(1);
   }
-  // await sleep(1000);
   spinner.succeed('commit 验证成功！');
 }
 
