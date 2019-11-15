@@ -4,10 +4,10 @@
 const program = require("commander");
 
 program
-  .command("release")
+  .command("release [branchName]")
   .description("Release a new version")
-  .action(() => {
-    require('./release.js')
+  .action((branchName) => {
+    require('./release.js')(branchName)
   });
 
 program.parse(process.argv);
