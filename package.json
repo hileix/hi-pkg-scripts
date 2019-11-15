@@ -7,7 +7,7 @@
     "pkg-scripts": "src/index.js"
   },
   "scripts": {
-    "release": "node src/index.js"
+    "release": "node src/index.js -- release"
   },
   "repository": {
     "type": "git",
@@ -33,5 +33,6 @@
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
-  }
+  },
+  "dependencies": {}
 }
