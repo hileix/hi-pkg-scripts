@@ -7,6 +7,7 @@ const path = require('path');
 const { spawnSync, spawn, execSync } = require('child_process');
 const git = require('git-rev-sync');
 const sgf = require('staged-git-files');
+const ora = require('ora');
 
 const pkg = require(path.resolve(process.cwd(), 'package.json'));
 
@@ -26,9 +27,12 @@ const questionOne = {
   choices: ['主要版本', '次要版本', '修订号']
 };
 
+const spinner = ora().start();
+
 main();
 
 async function main() {
+  
   validateBranch();
 
   await validateCommit();
@@ -50,41 +54,36 @@ async function main() {
  * 验证是否是在主分支（只能在主分支发布）
  */
 function validateBranch() {
-  tipMessage('开始验证分支是否为 master 分支：', 'start');
+  spinner.start('开始验证分支是否为 master 分支')
   const currentBranch = git.branch(process.cwd());
-
   if ('master'.indexOf(currentBranch) === -1) {
-    tipMessage(
-      `当前为 ${chalk.green(currentBranch)} 分支，请在 ${chalk.green(
-        'master'
-      )} 分支进行发布`,
-      'fail'
-    );
+    spinner.fail(`当前为 ${chalk.green(currentBranch)} 分支，请在 ${chalk.green(
+      'master'
+    )} 分支进行发布`);
     process.exit(1);
   }
-  tipMessage('分支验证成功！', 'success');
+  spinner.succeed('分支验证成功！');
 }
 
 /**
  * 验证是否有未提交的
  */
 async function validateCommit() {
-  tipMessage('开始验证是否有未 commit 的文件：', 'start');
-
+  spinner.start('开始验证是否有未 commit 的文件');
+  
   async function hasNoCommitFile() {
     const stagedFiles = await sgf();
     const arr = ['Added', 'Modified'];
     const result = stagedFiles.filter(item => arr.includes(item.status));
     return result.length > 0;
   }
-
   const isNoCommitFile = await hasNoCommitFile();
-
   if (isNoCommitFile) {
-    tipMessage(`当前有文件未 commit，请先 commit！`, 'fail');
+    spinner.fail(`当前有文件未 commit，请先 commit！`);
     process.exit(1);
   }
-  tipMessage('验证成功！', 'success');
+  // await sleep(1000);
+  spinner.succeed('commit 验证成功！');
 }
 
 /**
@@ -112,7 +111,7 @@ async function generateNewVersion() {
  * @param {string} version 版本号
  */
 function modifiedVersion(version) {
-  tipMessage('开始修改版本号：', 'start');
+  spinner.text = '开始修改版本号';
   pkg.version = version;
   try {
     fs.writeFileSync(
@@ -123,25 +122,25 @@ function modifiedVersion(version) {
       }
     );
   } catch (err) {
-    log(chalk.red(err.message));
-    tipMessage('修改版本号失败！', 'fail');
+    spinner.fail(`修改版本号失败：${err.message}`);
     process.exit(1);
   }
-  tipMessage('修改版本号成功！', 'success');
+  spinner.succeed(`修改版本号成功！`);
 }
 
 /**
  * 发布到 npm
  */
 function publish() {
-  tipMessage('开始 publish：', 'start');
+  spinner.start('开始 publish');
   execCommand('npm publish --access public', {
     onError: () => {
       // publish 失败，则 checkout 掉 package.json 文件
       execCommand('git checkout package.json');
+      spinner.fail(`publish 失败！`);
     }
   });
-  tipMessage('publish 成功', 'success');
+  spinner.succeed(`publish 成功！`);
 }
 
 /**
@@ -149,7 +148,7 @@ function publish() {
  * @param {string} version release 版本
  */
 function gitPush(version) {
-  tipMessage('开始 git add/commit/push：', 'start');
+  spinner.start('开始 git add/commit/push');
 
   // push branch
   execCommand('git add .');
@@ -159,23 +158,7 @@ function gitPush(version) {
   // push tag
   execCommand(`git tag ${version}`);
   execCommand(`git push origin ${version}`);
-
-  tipMessage('git add/commit/push 成功！', 'success');
-}
-
-/**
- * 提示信息
- * @param {string} text 文案
- * @param {string} type 文案类型：'start' 操作开始 | 'success' 操作成功 | 'fail' 操作失败
- */
-function tipMessage(text, type) {
-  if (type === 'start') {
-    log(chalk.blue(`\n------${text}\n`));
-  } else if (type === 'success') {
-    log(chalk.green(`\n------${text}\n`));
-  } else if (type === 'fail') {
-    log(chalk.red(`\n------${text}\n`));
-  }
+  spinner.succeed(`git add/commit/push 成功！`);
 }
 
 /**
@@ -202,4 +185,12 @@ function execCommand(
   }
   log(result);
   onSuccess && onSuccess();
+}
+
+async function sleep(t) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve(true)
+    }, t)
+  })
 }

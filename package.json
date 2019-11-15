@@ -35,6 +35,7 @@
     "git-rev-sync": "^1.12.0",
     "inquirer": "^7.0.0",
     "listr": "^0.14.3",
+    "ora": "^4.0.3",
     "semver": "^6.3.0",
     "staged-git-files": "^1.2.0"
   }
