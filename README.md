@@ -1,11 +1,12 @@
-# pkg-scripts
+# hi-pkg-scripts
 
 package.json scripts.
+- 发布并且根据 commit 生成 changelog
 
 ## 安装
 
 ```shell
-yarn add pkg-scripts -D
+yarn add hi-pkg-scripts -D
 ```
 
 ## 用法
@@ -16,13 +17,13 @@ yarn add pkg-scripts -D
 {
   "name": "your project name",
   "scripts": {
-    "release": "pkg-scripts release"
+    "release": "hi-pkg-scripts release"
   }
 }
 ```
 
-- pkg-scripts release: 发布一个版本到 npm 仓库上，会按照顺序做以下事情：
-  - 0. 验证分支是否为发布分支（目前为主分支）
+- pkg-scripts release <branch>: 发布一个版本到 npm 仓库上，会按照顺序做以下事情：
+  - 0. 验证分支是否为发布分支
   - 1. 更改 package.json 中的 version 字段
   - 2. 发布到 npm 仓库上
   - 4. 自动 commit，且打上 tag
