@@ -25,7 +25,11 @@
   "files": [
     "src/**"
   ],
-  "devDependencies": {
+  "devDependencies": {},
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "dependencies": {
     "chalk": "^3.0.0",
     "commander": "^4.0.1",
     "git-rev-sync": "^1.12.0",
@@ -33,9 +37,5 @@
     "ora": "^4.0.3",
     "semver": "^6.3.0",
     "staged-git-files": "^1.2.0"
-  },
-  "publishConfig": {
-    "registry": "https://registry.npmjs.org/"
-  },
-  "dependencies": {}
+  }
 }
