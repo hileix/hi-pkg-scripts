@@ -22,6 +22,9 @@
     "url": "https://github.com/hileix/pkg-scripts/issues"
   },
   "homepage": "https://github.com/hileix/pkg-scripts#readme",
+  "files": [
+    "src/**"
+  ],
   "devDependencies": {
     "chalk": "^3.0.0",
     "commander": "^4.0.1",
