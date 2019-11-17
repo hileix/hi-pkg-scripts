@@ -7,7 +7,7 @@
   },
   "scripts": {
     "start": "tsc --watch",
-    "release": "node src/index.js -- release feat/config-file"
+    "release": "node src/index.js -- release master"
   },
   "repository": {
     "type": "git",
