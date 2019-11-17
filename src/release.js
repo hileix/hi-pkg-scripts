@@ -45,7 +45,7 @@ async function main(branchName = 'master') {
 
   publish();
 
-  gitPush(newVersion);
+  gitPush(newVersion, branchName);
 }
 
 /**
@@ -143,14 +143,15 @@ function publish() {
 /**
  * 将修改的 package.json push
  * @param {string} version release 版本
+ * @param {string} branchName 分支名称
  */
-function gitPush(version) {
+function gitPush(version, branchName) {
   spinner.start('开始 git add/commit/push');
 
   // push branch
   execCommand('git add .');
   execCommand(`git commit -m "Release v${version}"`);
-  execCommand('git push origin master');
+  execCommand(`git push origin ${branchName}`);
 
   // push tag
   execCommand(`git tag ${version}`);
