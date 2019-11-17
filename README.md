@@ -58,3 +58,6 @@ yarn add hi-pkg-scripts -D
 
 ## 待办事项
 - [ ] 增加 mock 服务
+
+## 许可
+[MIT](./LICENSE)
