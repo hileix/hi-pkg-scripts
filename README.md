@@ -1,9 +1,9 @@
 # hi-pkg-scripts
 
-package.json scripts.
+发布、mock 服务+++
 
 - [x] 发布包到 npm（或其他）仓库
-- pkg-scripts release `<branch>`: 发布一个版本到 npm 仓库上，会按照顺序做以下事情
+- hi-pkg-scripts release `<branch>`: 发布一个版本到 npm 仓库上，会按照顺序做以下事情
   - 验证分支是否为发布分支
   - 更改 package.json 中的 version 字段
   - 发布到 npm 仓库上
