@@ -4,13 +4,13 @@ const chalk = require('chalk');
 const { execSync } = require('child_process');
 const ora = require('ora');
 
-const spinner = ora().start();
 
 /**
  * 检查当前分支是否有未 commit 的文件
  */
 function checkCommit() {
-  spinner.start('开始验证是否有未 commit 的文件');
+  const spinner = ora().start('开始验证是否有未 commit 的文件');
+
   const keyStrArr = [
     'Changes not staged for commit:',
     'Changes to be committed:',

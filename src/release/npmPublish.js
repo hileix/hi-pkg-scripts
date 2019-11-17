@@ -7,9 +7,8 @@ const { execCommand } = require('../utils');
  * npm publish
  */
 function npmPublish() {
-  const spinner = ora().start();
+  const spinner = ora().start('开始 publish');
 
-  spinner.start('开始 publish');
   execCommand('npm publish --access public', {
     onFail: () => {
       // publish 失败，则 checkout 掉 package.json 文件

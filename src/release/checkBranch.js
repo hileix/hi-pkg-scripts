@@ -2,14 +2,14 @@
 const git = require('git-rev-sync');
 const ora = require('ora');
 
-const spinner = ora().start();
 
 /**
  * 检查分支是否在发布分支
  * @param {string} branchName 发布分支名称
  */
 function checkBranch(branchName) {
-  spinner.start(`开始验证分支是否为 ${branchName} 分支`);
+  const spinner = ora().start(`开始验证分支是否为 ${branchName} 分支`);
+
   const currentBranch = git.branch(process.cwd());
   if (branchName.indexOf(currentBranch) === -1) {
     spinner.fail(`当前为 ${chalk.green(currentBranch)} 分支，请在 ${chalk.green(
