@@ -1,7 +1,7 @@
 "use strict";
 const git = require('git-rev-sync');
 const ora = require('ora');
-
+const chalk = require('chalk');
 
 /**
  * 检查分支是否在发布分支

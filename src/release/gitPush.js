@@ -1,7 +1,6 @@
 "use strict";
 const ora = require('ora');
 const { execCommand, log } = require('../utils');
-const chalk = require('chalk');
 
 /**
  * git push
