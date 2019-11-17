@@ -35,3 +35,7 @@ yarn add hi-pkg-scripts -D
   - 自动 commit，且打上 tag
   - 将 commit 和 tag push 到 git 仓库上
   - 根据 commit 信息自动生成（或更新）changelog.md 文件
+
+## 待办事项
+- [ ] 增加 package.json 配置
+- [ ] 增加 mock 服务

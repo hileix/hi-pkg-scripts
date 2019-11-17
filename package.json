@@ -2,12 +2,12 @@
   "name": "hi-pkg-scripts",
   "version": "0.4.1",
   "description": "package.json scripts",
-  "main": "index.js",
   "bin": {
     "hi-pkg-scripts": "src/index.js"
   },
   "scripts": {
-    "release": "node src/index.js -- release"
+    "start": "tsc --watch",
+    "release": "node src/index.js -- release feat/config-file"
   },
   "repository": {
     "type": "git",
@@ -38,7 +38,6 @@
     "listr": "^0.14.3",
     "ora": "^4.0.3",
     "semver": "^6.3.0",
-    "staged-git-files": "^1.2.0",
     "strsplit": "^1.0.0"
   }
 }

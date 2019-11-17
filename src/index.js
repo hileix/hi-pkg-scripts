@@ -7,7 +7,7 @@ program
   .command("release [branchName]")
   .description("Release a new version")
   .action((branchName) => {
-    require('./release.js')(branchName)
+    require('./release/index.js')(branchName)
   });
 
 program.parse(process.argv);
