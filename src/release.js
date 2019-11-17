@@ -222,7 +222,6 @@ function generateChangelogByCommit() {
     }
   });
 
-  console.log({ arr, commitArr });
   const commitStr = commitArr.join(`\n`)
   const extraContent = `${title}\n${commitStr}\n\n`;
 
