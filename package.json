@@ -39,5 +39,10 @@
     "ora": "^4.0.3",
     "semver": "^6.3.0",
     "strsplit": "^1.0.0"
+  },
+  "hi-pkg-scripts": {
+    "release": {
+      "generateChangelog": true
+    }
   }
 }
