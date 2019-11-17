@@ -2,14 +2,17 @@
 const inquirer = require('inquirer');
 const semver = require('semver');
 const chalk = require('chalk');
-const fs = require('fs');
 const path = require('path');
 const { spawnSync, spawn, execSync } = require('child_process');
 const git = require('git-rev-sync');
 const sgf = require('staged-git-files');
 const ora = require('ora');
+const strsplit = require('strsplit');
+const fs = require('fs-extra');
 
-const pkg = require(path.resolve(process.cwd(), 'package.json'));
+const projectDir = path.resolve(process.cwd());
+
+const pkg = require(`${projectDir}/package.json`);
 
 const oldVersion = pkg.version;
 const log = console.log;
@@ -46,6 +49,8 @@ async function main(branchName = 'master') {
   publish();
 
   gitPush(newVersion, branchName);
+
+  generateChangelogByCommit();
 }
 
 /**
@@ -191,6 +196,45 @@ async function sleep(t) {
       resolve(true)
     }, t)
   })
+}
+
+/**
+ * 通过 commit 生成 changelog
+ */
+function generateChangelogByCommit() {
+  spinner.start('开始生成 changelog');
+
+  const commitMessage = execSync('git log --oneline', {
+    encoding: 'utf8'
+  });
+
+  const arr = strsplit(commitMessage, /\n/).filter(Boolean);
+
+  let commitArr = [], i = 0, title = arr[0] ? arr[0].replace(/^[0-9a-z]{7} /g, '## ') : '';
+  arr.forEach(s => {
+    if (i < 2) {
+      if (/Release v/.test(s)) {
+        i++;
+      } else {
+        s = s.replace(/^[0-9a-z]{7} /g, '- ');
+        commitArr.push(s);
+      }
+    }
+  });
+
+  console.log({ arr, commitArr });
+  const commitStr = commitArr.join(`\n`)
+  const extraContent = `${title}\n${commitStr}\n\n`;
+
+  const changelogPath = path.resolve(projectDir, 'changelog.md');
+  fs.ensureFileSync(changelogPath);
+  const changelogContent = fs.readFileSync(changelogPath)
+  const content = `${extraContent}${changelogContent}`;
+  fs.writeFileSync(changelogPath, content);
+
+  spinner.succeed(`在 ${changelogPath} 生成 changlog 成功！请依据实际情况修改 changelog，最后 push！`);
+
+  process.exit();
 }
 
 module.exports = main;
