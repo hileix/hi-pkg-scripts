@@ -12,6 +12,9 @@
   - 根据 commit 信息自动生成（或更新）changelog.md 文件（可配置，默认不开启）
 
 - [ ] mock 服务
+- hi-pkg-scripts mock：开启 mock 服务，需要遵循以下
+  - 在项目根目录下含有 `mock/` 文件夹
+  - 在 `mock/` 文件夹下写 mock 文件
 
 
 ## 更新日志
