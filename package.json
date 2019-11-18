@@ -3,7 +3,7 @@
   "version": "0.5.0",
   "description": "package.json scripts",
   "bin": {
-    "hi-pkg-scripts": "src/index.js"
+    "hps": "src/index.js"
   },
   "scripts": {
     "start": "tsc --watch",
@@ -35,6 +35,8 @@
     "fs-extra": "^8.1.0",
     "git-rev-sync": "^1.12.0",
     "inquirer": "^7.0.0",
+    "koa": "^2.11.0",
+    "koa-router": "^7.4.0",
     "listr": "^0.14.3",
     "ora": "^4.0.3",
     "semver": "^6.3.0",

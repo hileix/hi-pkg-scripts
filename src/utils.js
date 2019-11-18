@@ -35,7 +35,7 @@ function execCommand(
 }
 
 /**
- * 暂停睡眠
+ * 睡眠
  * @param {number}} time 睡眠时间，单位：毫秒
  */
 async function sleep(time) {
