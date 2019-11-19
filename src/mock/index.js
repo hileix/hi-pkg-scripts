@@ -1,52 +1,102 @@
 'use strict';
 
-const Koa = require('koa');
-const app = new Koa();
 const path = require('path');
 const fs = require('fs-extra');
+const { projectPath, pkg } = require('../dev.js');
+const { spawn } = require('child_process');
+const chalk = require('chalk');
+const mockPath = path.resolve(projectPath, 'mock');
+const notifier = require('node-notifier');
 
-const { projectPath } = require('../dev.js');
+let hasNotifier =
+  pkg['hi-pkg-scripts'] &&
+  pkg['hi-pkg-scripts'].mock &&
+  pkg['hi-pkg-scripts'].mock.notifier;
 
-const Router = require('koa-router');
-const router = new Router();
+if (typeof hasNotifier !== 'boolean') {
+  hasNotifier = true;
+}
 
-generateRouters(router);
+let subProcess = null;
 
-router.get('/', (ctx, next) => {
-  ctx.body = { code: 1, message: 'success' };
-});
+startProcess();
 
-app.use(router.routes()).use(router.allowedMethods());
+function startProcess(isRestart = false) {
+  // 开启 mock 服务
+  subProcess = spawn('node', [`${path.resolve(__dirname, 'app.js')}`]);
 
-app.listen(3000);
-
-console.log('http://localhost:3000/');
-
-function generateRouters(router) {
-  const mockPath = path.resolve(projectPath, 'mock');
-  if (!fs.existsSync(mockPath)) {
-    console.error('mock 文件夹不存在！');
-    process.exit(1);
+  if (hasNotifier) {
+    if (isRestart) {
+      notifier.notify({
+        title: 'Mock service',
+        message: 'Restart mock service successful!'
+      });
+    } else {
+      notifier.notify({
+        title: 'Mock service',
+        message: 'Mock service started successfully!'
+      });
+    }
   }
-  const files = fs.readdirSync(mockPath);
-  files.forEach(file => {
-    const fileObj = require(`${mockPath}/${file}`);
 
-    for (let key in fileObj) {
-      const arr = key.split(' ');
-      const method = arr[0].toLowerCase();
-      const url = arr[1];
-      const value = fileObj[key];
-
-      if (typeof value === 'object') {
-        router[method](url, (ctx, next) => {
-          ctx.body = value;
-        });
-      }
-
-      if (typeof value === 'function') {
-        router[method](url, value);
-      }
+  // 打印输出到控制台
+  subProcess.stdout.on('data', data => {
+    const s = data.toString();
+    let obj,
+      hasError = false;
+    try {
+      obj = JSON.parse(s);
+    } catch (err) {
+      hasError = true;
+    }
+    if (hasError) {
+      console.log(chalk.green(s));
+    } else {
+      console.log(chalk.green(JSON.stringify(obj, null, 2)));
     }
   });
+  subProcess.stderr.on('data', data => {
+    const s = data.toString();
+    let obj,
+      hasError = false;
+    try {
+      obj = JSON.parse(s);
+    } catch (err) {
+      hasError = true;
+    }
+    if (hasError) {
+      console.log(chalk.red(s));
+    } else {
+      console.log(chalk.red(JSON.stringify(obj, null, 2)));
+    }
+  });
+
+  // kill 子进程
+  process.on('SIGINT', () => {
+    if (hasNotifier) {
+      notifier.notify({
+        title: 'Mock service',
+        message: 'Mock service exits.'
+      });
+    }
+
+    subProcess.kill('SIGKILL');
+    process.exit(1);
+  });
 }
+
+function restartProcess() {
+  console.log('Restart mock service...');
+  if (subProcess !== null) {
+    try {
+      subProcess.kill('SIGKILL');
+    } catch (err) {
+      console.log('restartProcess: ' + err.message);
+    }
+  }
+  startProcess(true);
+}
+
+fs.watch(mockPath, (event, filename) => {
+  restartProcess();
+});

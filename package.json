@@ -3,7 +3,7 @@
   "version": "0.5.0",
   "description": "package.json scripts",
   "bin": {
-    "hps": "src/index.js"
+    "hi-pkg-scripts": "src/index.js"
   },
   "scripts": {
     "start": "tsc --watch",
@@ -32,12 +32,14 @@
   "dependencies": {
     "chalk": "^3.0.0",
     "commander": "^4.0.1",
+    "express": "^4.17.1",
+    "express-pino-logger": "^4.0.0",
     "fs-extra": "^8.1.0",
     "git-rev-sync": "^1.12.0",
+    "http-proxy-middleware": "^0.20.0",
     "inquirer": "^7.0.0",
-    "koa": "^2.11.0",
-    "koa-router": "^7.4.0",
     "listr": "^0.14.3",
+    "node-notifier": "^6.0.0",
     "ora": "^4.0.3",
     "semver": "^6.3.0",
     "strsplit": "^1.0.0"
