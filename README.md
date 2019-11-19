@@ -122,7 +122,7 @@ npm add hi-pkg-scripts -g
   "name": "your project name",
   "scripts": {
     "release": "hi-pkg-scripts release"
-  }
+  },
   "hi-pkg-scripts": {
     "release": {
       "generateChangelog": true
@@ -133,7 +133,7 @@ npm add hi-pkg-scripts -g
 
 ### mock 服务（目前只支持带 proxy 的项目）
 
-- 在项目的 `package.json` 的 `scripts` 字段中添加 `release`（或其他）字段
+- 在项目的 `package.json` 的 `scripts` 字段中添加 `mock`（或其他）字段
 
 ```json
 {
