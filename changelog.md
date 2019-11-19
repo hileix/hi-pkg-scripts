@@ -1,3 +1,6 @@
+## Release v0.6.0
+- feat:添加 mock 功能
+
 ## Release v0.5.0
 - feat:添加可配置 generateChangelog 功能
 
