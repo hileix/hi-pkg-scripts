@@ -1,6 +1,6 @@
 {
   "name": "hi-pkg-scripts",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "package.json scripts",
   "bin": {
     "hi-pkg-scripts": "src/index.js"
