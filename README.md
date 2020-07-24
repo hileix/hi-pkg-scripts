@@ -57,13 +57,13 @@ module.exports = {
   'get /api/users': {
     code: 0,
     users: [1, 2],
-    message: 'success'
+    message: 'success',
   },
 
   // 自定义函数返回值，api 参考 express: http://www.expressjs.com.cn/
   'post /api/users/create': (req, res) => {
     res.json({ code: 0, message: 'success' });
-  }
+  },
 };
 ```
 
@@ -179,6 +179,8 @@ npm add hi-pkg-scripts -g
 
 - [x] 发布
 - [x] mock 服务
+- [ ] Prettier - Code formatter
+- [ ] git merge 指定文件
 
 ## 许可
 
