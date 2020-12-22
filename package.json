@@ -39,7 +39,7 @@
     "http-proxy-middleware": "^0.20.0",
     "inquirer": "^7.0.0",
     "listr": "^0.14.3",
-    "node-notifier": "^6.0.0",
+    "node-notifier": "^8.0.1",
     "ora": "^4.0.3",
     "semver": "^6.3.0",
     "strsplit": "^1.0.0"
